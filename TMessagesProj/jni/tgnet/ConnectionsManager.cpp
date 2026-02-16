@@ -437,7 +437,7 @@ void ConnectionsManager::loadConfig() {
             RAND_bytes((uint8_t *) &pushSessionId, 8);
         }
         if (currentDatacenterId == 0) {
-            currentDatacenterId = 2;
+            currentDatacenterId = 1;
         }
         saveConfig();
     }
@@ -1816,16 +1816,20 @@ void ConnectionsManager::initDatacenters() {
     if (!testBackend) {
         if (datacenters.find(1) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 1);
-            datacenter->addAddressAndPort("149.154.175.50", 443, 0, "");
-            datacenter->addAddressAndPort("2001:b28:f23d:f001:0000:0000:0000:000a", 443, 1, "");
             datacenters[1] = datacenter;
+        } else {
+            datacenter = datacenters[1];
         }
+        std::vector<TcpAddress> customAddresses;
+        customAddresses.push_back(TcpAddress("192.168.100.10", 10443, 0, ""));
+        datacenter->replaceAddresses(customAddresses, 0);
 
+#if 0
         if (datacenters.find(2) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 2);
-            datacenter->addAddressAndPort("149.154.167.51", 443, 0, "");
-            datacenter->addAddressAndPort("95.161.76.100", 443, 0, "");
-            datacenter->addAddressAndPort("2001:67c:4e8:f002:0000:0000:0000:000a", 443, 1, "");
+             datacenter->addAddressAndPort("149.154.167.51", 443, 0, "");
+             datacenter->addAddressAndPort("95.161.76.100", 443, 0, "");
+             datacenter->addAddressAndPort("2001:67c:4e8:f002:0000:0000:0000:000a", 443, 1, "");
             datacenters[2] = datacenter;
         }
 
@@ -1849,14 +1853,19 @@ void ConnectionsManager::initDatacenters() {
             datacenter->addAddressAndPort("2001:b28:f23f:f005:0000:0000:0000:000a", 443, 1, "");
             datacenters[5] = datacenter;
         }
+#endif
     } else {
         if (datacenters.find(1) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 1);
-            datacenter->addAddressAndPort("149.154.175.40", 443, 0, "");
-            datacenter->addAddressAndPort("2001:b28:f23d:f001:0000:0000:0000:000e", 443, 1, "");
             datacenters[1] = datacenter;
+        } else {
+            datacenter = datacenters[1];
         }
+        std::vector<TcpAddress> customAddresses;
+        customAddresses.push_back(TcpAddress("192.168.100.10", 10443, 0, ""));
+        datacenter->replaceAddresses(customAddresses, 0);
 
+#if 0
         if (datacenters.find(2) == datacenters.end()) {
             datacenter = new Datacenter(instanceNum, 2);
             datacenter->addAddressAndPort("149.154.167.40", 443, 0, "");
@@ -1870,6 +1879,7 @@ void ConnectionsManager::initDatacenters() {
             datacenter->addAddressAndPort("2001:b28:f23d:f003:0000:0000:0000:000e", 443, 1, "");
             datacenters[3] = datacenter;
         }
+#endif
     }
 }
 
@@ -3442,6 +3452,7 @@ void ConnectionsManager::updateDcSettings(uint32_t dcNum, bool workaround, bool 
                         moveToDatacenter(iter.first);
                     }
                 }
+                initDatacenters();
                 saveConfig();
                 scheduleTask([&] {
                     processRequestQueue(AllConnectionTypes, 0);
