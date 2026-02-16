@@ -4199,7 +4199,7 @@ public class ChatActivity extends BaseFragment implements
                 audioCallIconItem = menu.lazilyAddItem(call, R.drawable.ic_call, themeDelegate);
                 audioCallIconItem.setContentDescription(LocaleController.getString(R.string.Call));
                 userFull = getMessagesController().getUserFull(currentUser.id);
-                if (userFull != null && userFull.phone_calls_available) {
+                if (userFull != null && userFull.phone_calls_available && !UserObject.isService(currentUser.id)) {
                     showAudioCallAsIcon = !inPreviewMode;
                     audioCallIconItem.setVisibility(View.VISIBLE);
                 } else {
@@ -4318,7 +4318,7 @@ public class ChatActivity extends BaseFragment implements
             if (currentUser != null && chatMode != MODE_SAVED) {
                 headerItem.lazilyAddSubItem(call, R.drawable.msg_callback, LocaleController.getString(R.string.Call));
                 headerItem.lazilyAddSubItem(video_call, R.drawable.msg_videocall, LocaleController.getString(R.string.VideoCall));
-                if (userFull != null && userFull.phone_calls_available) {
+                if (userFull != null && userFull.phone_calls_available && !UserObject.isService(currentUser.id)) {
                     headerItem.showSubItem(call);
                     if (userFull.video_calls_available) {
                         headerItem.showSubItem(video_call);
@@ -17766,7 +17766,7 @@ public class ChatActivity extends BaseFragment implements
                     TLRPC.UserFull userInfo = getCurrentUserInfo();
                     if (showAudioCallAsIcon) {
                         headerItem.hideSubItem(call);
-                    } else if (userInfo != null && userInfo.phone_calls_available) {
+                    } else if (userInfo != null && userInfo.phone_calls_available && currentUser != null && !UserObject.isService(currentUser.id)) {
                         headerItem.showSubItem(call, true);
                     }
                 }
@@ -23167,11 +23167,11 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 if (headerItem != null) {
-                    showAudioCallAsIcon = userInfo.phone_calls_available && !inPreviewMode;
+                    showAudioCallAsIcon = userInfo.phone_calls_available && !inPreviewMode && !UserObject.isService(currentUser.id);
                     if (avatarContainer != null) {
                         avatarContainer.setTitleExpand(showAudioCallAsIcon);
                     }
-                    if (userInfo.phone_calls_available) {
+                    if (userInfo.phone_calls_available && !UserObject.isService(currentUser.id)) {
                         if (showAudioCallAsIcon) {
                             if (audioCallIconItem != null) {
                                 View item = audioCallIconItem.createView();
@@ -28567,7 +28567,7 @@ public class ChatActivity extends BaseFragment implements
         super.setInPreviewMode(value);
         if (currentUser != null && audioCallIconItem != null) {
             TLRPC.UserFull userFull = getMessagesController().getUserFull(currentUser.id);
-            if (userFull != null && userFull.phone_calls_available) {
+            if (userFull != null && userFull.phone_calls_available && !UserObject.isService(currentUser.id)) {
                 showAudioCallAsIcon = !inPreviewMode;
                 audioCallIconItem.setVisibility(View.VISIBLE);
             } else {

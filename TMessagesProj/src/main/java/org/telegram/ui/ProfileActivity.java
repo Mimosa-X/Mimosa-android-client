@@ -7218,7 +7218,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             final ItemOptions o = ItemOptions.makeOptions(this, view);
             o.setScrimViewBackground(listView.getClipBackground(view));
             if (position == phoneRow) {
-                if (userInfo != null && userInfo.phone_calls_available) {
+                if (userInfo != null && userInfo.phone_calls_available && !UserObject.isService(userId)) {
                     o.add(R.drawable.msg_calls, getString(R.string.CallViaTelegram), () -> {
                         if (getParentActivity() == null) return;
                         VoIPHelper.startCall(user, false, userInfo != null && userInfo.video_calls_available, getParentActivity(), userInfo, getAccountInstance());
@@ -11752,7 +11752,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     editItemVisible = true;
                 }
 
-                if (userInfo != null && userInfo.phone_calls_available) {
+                if (userInfo != null && userInfo.phone_calls_available && !UserObject.isService(userId)) {
                     callItemVisible = true;
                     videoCallItemVisible = userInfo.video_calls_available;
                 }
