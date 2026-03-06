@@ -870,7 +870,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
             }
             String versionName = pInfo.versionName;
             if (!versionName.endsWith("_OWPG")) {
-                versionName += "_OD";
+                versionName += "_O";
             }
             return formatString(R.string.TelegramVersion, String.format(Locale.US, "v%s (%d)\n%s", versionName, code, abi));
         } catch (Exception e) {
