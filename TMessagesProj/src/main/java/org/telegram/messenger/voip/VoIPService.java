@@ -1684,6 +1684,18 @@ public class VoIPService extends Service implements SensorEventListener, AudioMa
 		}
 		final long key_fingerprint = privateCall.key_fingerprint;
 		privateCall = phoneCall;
+		boolean oldVideoCall = videoCall;
+		videoCall = privateCall != null && privateCall.video;
+		boolean oldIsVideoAvailable = isVideoAvailable;
+		if (videoCall) {
+			isVideoAvailable = true;
+		}
+		if (oldIsVideoAvailable != isVideoAvailable) {
+			for (int a = 0; a < stateListeners.size(); a++) {
+				StateListener l = stateListeners.get(a);
+				l.onVideoAvailableChange(isVideoAvailable);
+			}
+		}
 		if (phoneCall instanceof TL_phone.TL_phoneCallDiscarded) {
 			needSendDebugLog = phoneCall.need_debug;
 			needRateCall = phoneCall.need_rating;
@@ -4783,6 +4795,19 @@ public class VoIPService extends Service implements SensorEventListener, AudioMa
 		currentState = state;
 		if (currentState == STATE_ESTABLISHED) {
 			destroyConverting();
+			// Enable video capability after call is established
+			// This allows either client to enable video, even if call was created without video
+			// The actual video state is controlled by WebRTC signaling, not the Video flag
+			if (privateCall != null && !isVideoAvailable) {
+				boolean oldIsVideoAvailable = isVideoAvailable;
+				isVideoAvailable = true;
+				if (oldIsVideoAvailable != isVideoAvailable) {
+					for (int a = 0; a < stateListeners.size(); a++) {
+						StateListener l = stateListeners.get(a);
+						l.onVideoAvailableChange(isVideoAvailable);
+					}
+				}
+			}
 		}
 		if (USE_CONNECTION_SERVICE && state == STATE_ESTABLISHED /*&& !wasEstablished*/ && systemCallConnection != null) {
 			systemCallConnection.setActive();
