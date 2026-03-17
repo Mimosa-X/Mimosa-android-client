@@ -2,6 +2,8 @@
 
 **Android client for OwpenGram server - Telegram-compatible messaging.**
 
+![android-demo](https://github.com/user-attachments/assets/6728fd39-724f-4bfc-8a05-7c98062fe619)
+
 ---
 
 ## ✨ What is OwpenGram Android?
