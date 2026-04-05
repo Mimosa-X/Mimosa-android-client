@@ -1,18 +1,18 @@
-# 🤖 OwpenGram Android
+# 🤖 Mimosa Android
 
-**Android client for OwpenGram server - Telegram-compatible messaging.**
+**Android client for Mimosa server - Telegram-compatible messaging.**
 
 ![android-demo](https://github.com/user-attachments/assets/6728fd39-724f-4bfc-8a05-7c98062fe619)
 
 ---
 
-## ✨ What is OwpenGram Android?
+## ✨ What is Mimosa Android?
 
-OwpenGram Android is an Android messaging client compatible with the [OwpenGram Server](https://github.com/owpengram/owpengram-server). Based on Telegram for Android, it provides a familiar interface for connecting to your own self-hosted messaging server.
+Mimosa Android is an Android messaging client compatible with the [Mimosa Server](https://github.com/Mimosa/Mimosa-server). Based on Telegram for Android, it provides a familiar interface for connecting to your own self-hosted messaging server.
 
 ## 🔗 Compatibility
 
-This client is designed to work with the [OwpenGram Server](https://github.com/owpengram/owpengram-server). Simply configure the client to connect to your OwpenGram server instance and start messaging!
+This client is designed to work with the [Mimosa Server](https://github.com/Mimosa/Mimosa-server). Simply configure the client to connect to your Mimosa server instance and start messaging!
 
 ## ⚙️ Server Configuration
 
@@ -24,7 +24,7 @@ For detailed build instructions, system requirements, and comprehensive document
 
 ## 💬 Community
 
-- 📢 **Telegram Channel:** [@owpengram](https://t.me/owpengram)
+- 📢 **Telegram Channel:** [@Mimosa](https://t.me/Mimosa)
 - 💬 **Telegram Chat:** [Join the discussion](https://t.me/+sVB6Ymv70jEwNTAy)
 
 ## 📄 License
@@ -35,4 +35,4 @@ For detailed build instructions, system requirements, and comprehensive document
 
 ## ⭐ Give us a Star!
 
-If OwpenGram Android helps you, consider giving us a star on GitHub!
+If Mimosa Android helps you, consider giving us a star on GitHub!
